@@ -4,13 +4,15 @@ from matplotlib.patches import Rectangle
 
 #Parametres
 draw_all_step = False
-n_disk = 4
+print_all_steps = True
+n_disk = 1
 
 #Algorithme
 def hanoi(T):
+    compteur=0
     n=len(T)
     l=len(T[0])
-    draw_table(T[:])
+    draw_step(T)
     plt.show()
     while True:
         #deplacement du plus petit element
@@ -20,8 +22,9 @@ def hanoi(T):
         else : m=(m-1)%n
         push(T[m],1)
         draw_step(T)
-        #Condition d'arret (marche que pour les nobres pairs)
-        if T==[[0]*l,[0]*l,[l-i for i in range(0,l)]] or T==[[0]*l,[l-i for i in range(0,l)],[0]*l]:break
+        compteur+=1
+        #Condition d'arret
+        if T==[[0]*l,[0]*l,[l-i for i in range(0,l)]]: break
         #Permutation d'un autre element
         c=colone_max(T)
         a=0
@@ -36,8 +39,8 @@ def hanoi(T):
             pop(T[a])
             push(T[c],e)
         draw_step(T)
-    draw_table(T[:])
-    plt.show()
+        compteur+=1
+    return compteur
 
 #fonctions de dessin
 def table_init(n): return [[n-i for i in range(0,n)],[0]*n,[0]*n]
@@ -64,7 +67,7 @@ def draw_step(T):
     if draw_all_step:
         draw_table(T)
         plt.show()
-    else: print(T)
+    if print_all_steps: print(T)
 
 
 #Helpers
@@ -102,4 +105,4 @@ def pop(C):
 def push(C,e):
     C[(first(C)[0]+1)%len(C)]=e
 
-hanoi(table_init(n_disk))
+print("nombre etapes: "+str(hanoi(table_init(n_disk))))
