@@ -4,7 +4,7 @@ from matplotlib.patches import Rectangle
 
 #Parametres
 draw_all_step = False
-n_disk = 2
+n_disk = 4
 
 #Algorithme
 def hanoi(T):
@@ -16,7 +16,8 @@ def hanoi(T):
         #deplacement du plus petit element
         m=colone_min(T)
         pop(T[m])
-        m=(1+m)%n
+        if n_disk%2==0:m=(1+m)%n
+        else : m=(m-1)%n
         push(T[m],1)
         draw_step(T)
         #Condition d'arret (marche que pour les nobres pairs)
